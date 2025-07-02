@@ -1,16 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
-html{
+html {
   overflow-y: scroll;
+  font-family: "Montserrat", sans-serif;
 }
-.active{
-text-decoration:  underline;
-text-underline-offset: 4px;
-text-decoration-color: oklch(72.3% 0.219 149.579);
-outline: 4px ;
-background-color:rgba(0, 180, 72, 0.877) ;
-color: white;
+
+.header-text{
+  font-family: "Great Vibes", cursive;
+}
+
+.active {
+  text-decoration-color: #6255e3;
+  outline: 4px;
+  background-color: #6255e3;
+  color: white;
 }
 
 @custom-variant dark (&:is(.dark *));

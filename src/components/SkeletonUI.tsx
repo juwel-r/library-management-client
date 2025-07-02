@@ -9,7 +9,7 @@ const SkeletonUI = () => {
           <img className="opacity-70" src={bookPlaceholder} alt="book-placeholder" />
         </Skeleton>
         <div className="space-y-2">
-        <Skeleton className="bg-transparent text-gray-300">Loading Book...</Skeleton>
+        <Skeleton className="bg-transparent text-gray-300">Loading Book Data...</Skeleton>
           <Skeleton className="h-2 w-[150px]" />
           <Skeleton className="h-2 w-[150px]" />
           <Skeleton className="h-2 w-[100px]" />

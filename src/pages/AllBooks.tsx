@@ -1,10 +1,12 @@
 import BookCard from "@/components/BookCard";
 import SkeletonUI from "@/components/SkeletonUI";
+import { Button } from "@/components/ui/button";
 import { useGetBooksQuery } from "@/redux/api/baseApi";
 import type { IBook } from "@/types";
+import { Link } from "react-router";
 
 const AllBooks = () => {
-  const { data, isLoading } = useGetBooksQuery(undefined, {
+  const { data, isLoading, error } = useGetBooksQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 
@@ -21,15 +23,31 @@ const AllBooks = () => {
         </div>
       </div>
     );
+  } else if (error) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <p className="text-3xl  italic text-red-300">Failed to load Books.</p>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <div className="flex justify-between items-center sm:mx-8 mx-4">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">All Books</h2>
+          <Link to={"/create-book"}>
+            <Button className=" bg-[#6255E3]">Add New Book</Button>
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
+          {!isLoading &&
+            data.data.length > 0 &&
+            data.data.map((book: IBook) => (
+              <BookCard key={book._id} book={book} />
+            ))}
+        </div>
+      </div>
+    );
   }
-
-  return (
-    <div className="grid grid-cols-3 gap-6">
-      {!isLoading &&
-        data.data.length > 0 &&
-        data.data.map((book: IBook) => <BookCard key={book._id} book={book} />)}
-    </div>
-  );
 };
 
 export default AllBooks;

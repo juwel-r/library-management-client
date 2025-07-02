@@ -65,7 +65,7 @@ export function EditBookModal({ book }: IProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="hover:bg-green-400" variant={"outline"}>
+        <Button className="hover:bg-[#6255E3] hover:text-white" variant={"outline"}>
           Edit
         </Button>
       </DialogTrigger>

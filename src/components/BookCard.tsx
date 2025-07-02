@@ -35,7 +35,7 @@ const BookCard = ({ book }: IProps) => {
   };
 
   return (
-    <div className="relative max-w-80 h-[400px] rounded-2xl shadow-sm border flex flex-col justify-between p-4 transition duration-200">
+    <div className="relative max-w-80 h-[400px] mx-auto rounded-2xl shadow-sm border flex flex-col justify-between p-4 transition duration-200">
       {/* Book Cover */}
       <img
         src={bookPlaceholder}
@@ -53,8 +53,10 @@ const BookCard = ({ book }: IProps) => {
         <p>ISBN: {book.isbn}</p>
         <p>Copies: {book.copies}</p>
         <p
-          className={`absolute left-0 top-0 rounded-tl-2xl rounded-br-2xl p-2 overflow-hidden text-white ${
-            book.available ? "bg-green-500" : "bg-red-400"
+          className={`absolute left-0 top-0 rounded-tl-2xl rounded-br-2xl p-2 overflow-hidden  shadow-sm shadow-indigo-300 ${
+            book.available
+              ? "bg-[#6255E3] text-white"
+              : "bg-gray-200 text-gray-400"
           } font-medium`}
         >
           {book.available ? "Available" : "Unavailable"}
@@ -62,7 +64,7 @@ const BookCard = ({ book }: IProps) => {
       </div>
       <div className="border"></div>
       {/* Actions */}
-      <div className="mt-4 flex justify-between text-sm">
+      <div className="mt-4 flex justify-between text-sm space-x-6 ">
         <BorrowModal book={book}></BorrowModal>
         <EditBookModal book={book}></EditBookModal>
         <Button
