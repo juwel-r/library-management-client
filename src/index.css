@@ -19,6 +19,11 @@ html {
   color: white;
 }
 
+/* pagination css */
+.selected-page{
+  background: #e7e6e6;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

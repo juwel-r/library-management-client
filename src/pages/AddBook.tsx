@@ -23,10 +23,10 @@ export function AddBook() {
   const handleSubmit: SubmitHandler<IBook> = async (data) => {
     const bookData = {
       ...data,
-      copies: parseInt(data.copies),
-      available: true,
+      copies: Number(data.copies),
+      available: data.copies > 0,
     };
-
+console.log(bookData);
     const response = await createBook(bookData);
     console.log(response);
     if (response?.data?.success) {
@@ -56,7 +56,9 @@ export function AddBook() {
         onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 my-auto"
       >
-        <p className="font-bold">To add new book, please enter book's details.</p>
+        <p className="font-bold">
+          To add new book, please enter book's details.
+        </p>
         <Form {...form}>
           <FormField
             control={form.control}
@@ -66,7 +68,7 @@ export function AddBook() {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} value={field.value || ""} />
                 </FormControl>
                 {fieldState.error && (
                   <p className="text-red-500 text-sm">
@@ -106,7 +108,7 @@ export function AddBook() {
                 <FormItem>
                   <FormLabel>ISBN Number</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} value={field.value || ""} />
                   </FormControl>
                   {fieldState.error && (
                     <p className="text-red-500 text-sm">
@@ -128,7 +130,7 @@ export function AddBook() {
                 <FormItem>
                   <FormLabel>Genre</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} value={field.value || ""} />
                   </FormControl>
                   {fieldState.error && (
                     <p className="text-red-500 text-sm">

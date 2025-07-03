@@ -1,13 +1,16 @@
+import type { GetBooksQueryArg, IBooksResponse } from "@/types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://library-management-silk-five.vercel.app/api" }),
   tagTypes: ["books"],
   endpoints: (builder) => ({
-    getBooks: builder.query({
-      query: () => "/books",
+    getBooks: builder.query<IBooksResponse, GetBooksQueryArg>({
+      query: ({ limit = 10, currentPage = 0 } = {}) => ({
+        url: `/books?limit=${limit}&currentPage=${currentPage}`,
+      }),
       providesTags: ["books"],
     }),
 

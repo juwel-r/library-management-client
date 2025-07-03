@@ -28,8 +28,8 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50">
-      <div className="relative max-w-6xl mx-auto flex items-center sm:justify-between px-4 py-3 backdrop-blur-md bg-white/20">
+    <nav className="fixed top-0 left-0 w-full z-50 border-b-2">
+      <div className="relative max-w-6xl mx-auto flex items-center sm:justify-between px-4 py-3 backdrop-blur-md ">
         <div className="sm:hidden">
           {menuOpen ? (
             <X onClick={() => setMenuOpen(!menuOpen)} />
@@ -37,13 +37,13 @@ const Navbar = () => {
             <Menu onClick={() => setMenuOpen(!menuOpen)} />
           )}
         </div>
-
+<hr />
         {/* Logo */}
         <div className="mx-auto sm:mx-0 sm:mr-10 flex items-center gap-4">
           <Link to="/" className="flex items-center sm:gap-x-4">
             <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
             <h1 className="header-text text-2xl font-semibold text-[#6255E3] mt-2">
-              R.Library
+              R. Library
             </h1>
           </Link>
         </div>
