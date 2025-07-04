@@ -6,17 +6,21 @@ export type IBookBorrowData = {
   };
 };
 
+export type Genre =
+  | "FICTION"
+  | "NON_FICTION"
+  | "SCIENCE"
+  | "HISTORY"
+  | "BIOGRAPHY"
+  | "FANTASY"
+  |"";
+
+
 export interface IBook {
   _id: string;
   title: string;
   author: string;
-  genre:
-    | "FICTION"
-    | "NON_FICTION"
-    | "SCIENCE"
-    | "HISTORY"
-    | "BIOGRAPHY"
-    | "FANTASY";
+  genre: Genre;
   isbn: string;
   description: string;
   copies: number;
@@ -24,7 +28,6 @@ export interface IBook {
   createdAt: string;
   updatedAt: string;
 }
-
 
 export interface IBooksResponse {
   success: boolean;
@@ -37,3 +40,14 @@ export interface GetBooksQueryArg {
   limit?: number;
   currentPage?: number;
 }
+
+
+
+export const genre: Array<string> = [
+  "FICTION",
+  "NON_FICTION",
+  "SCIENCE",
+  "HISTORY",
+  "BIOGRAPHY",
+  "FANTASY",
+];

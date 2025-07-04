@@ -9,19 +9,28 @@ export default function BorrowSummary() {
   );
 
   const summary: IBookBorrowData[] = data?.data || [];
-  console.log(summary);
 
-  if (isLoading) return <p className="text-center">Loading summary...</p>;
+  if (isLoading)
+    return <p className="text-center text-2xl pt-12">Loading summary...</p>;
+
   if (error)
     return (
-      <p className="text-center text-3xl  italic text-red-300">
+      <p className="text-center text-3xl  italic text-red-300 pt-12">
         Failed to load data.
       </p>
     );
 
+  if (!data.data.length) {
+    return (
+      <p className="text-center text-3xl  italic text-gray-400 pt-12">
+        No Borrow Data Found.
+      </p>
+    );
+  }
+
   return (
     <div className="mx-auto mt-8 px-4">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-center">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-center pt-8">
         Borrowed Books Summary
       </h2>
       <div className="flex lg:flex-row flex-col-reverse max-w-full gap-4">

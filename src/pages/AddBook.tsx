@@ -1,5 +1,5 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { IBook } from "@/types";
+import { genre, type IBook } from "@/types";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
@@ -15,10 +15,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function AddBook() {
   const [createBook] = useCreateBookMutation();
-  const form = useForm<IBook>();
+  const form = useForm<IBook>({defaultValues:{
+    title:'',
+    author:'',
+    isbn:'',
+    genre: "",
+    copies:1,
+    description:''
+  }});
 
   const handleSubmit: SubmitHandler<IBook> = async (data) => {
     const bookData = {
@@ -26,9 +40,7 @@ export function AddBook() {
       copies: Number(data.copies),
       available: data.copies > 0,
     };
-console.log(bookData);
     const response = await createBook(bookData);
-    console.log(response);
     if (response?.data?.success) {
       toastify("success", "New book added!");
     } else {
@@ -45,7 +57,7 @@ console.log(bookData);
   };
 
   return (
-    <div className="grid md:grid-cols-2 gap-x-12 w-full px-5">
+    <div className="grid md:grid-cols-2 gap-x-12 w-full px-5 pt-8">
       <h1 className="text-2xl sm:text-3xl font-bold sm:col-span-2 mx-auto sm:mb-4">
         Add New Book
       </h1>
@@ -68,7 +80,7 @@ console.log(bookData);
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ""} />
+                  <Input {...field} value={field.value} />
                 </FormControl>
                 {fieldState.error && (
                   <p className="text-red-500 text-sm">
@@ -89,7 +101,7 @@ console.log(bookData);
                 <FormItem>
                   <FormLabel>Author</FormLabel>
                   <FormControl>
-                    <Input {...field} value={field.value || ""} />
+                    <Input {...field} value={field.value} />
                   </FormControl>
                   {fieldState.error && (
                     <p className="text-red-500 text-sm">
@@ -108,7 +120,7 @@ console.log(bookData);
                 <FormItem>
                   <FormLabel>ISBN Number</FormLabel>
                   <FormControl>
-                    <Input {...field} value={field.value || ""} />
+                    <Input {...field} value={field.value} />
                   </FormControl>
                   {fieldState.error && (
                     <p className="text-red-500 text-sm">
@@ -127,11 +139,25 @@ console.log(bookData);
               name="genre"
               rules={{ required: "Genre is required!" }}
               render={({ field, fieldState }) => (
-                <FormItem>
+                <FormItem className="">
                   <FormLabel>Genre</FormLabel>
-                  <FormControl>
-                    <Input {...field} value={field.value || ""} />
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Priority" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {genre.map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   {fieldState.error && (
                     <p className="text-red-500 text-sm">
                       {fieldState.error.message}

@@ -20,7 +20,7 @@ const Chart = ({ summary }: IProps) => {
     name: item.book.title,
     count: item.totalQuantity,
   }));
-  console.log(data);
+
   return (
     <div style={{ width: "100%", height: 400 }}>
       <ResponsiveContainer width="100%" height="100%">

@@ -59,7 +59,7 @@ export function BorrowModal({ book }: IProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"outline"} disabled={!book.available} className="hover:bg-[#6255E3] hover:text-white">Borrow</Button>
+        <Button variant={"outline"} disabled={!book.available} className="hover:bg-[#6255E3] hover:text-white disabled:bg-gray-200">Borrow</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

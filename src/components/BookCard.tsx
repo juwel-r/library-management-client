@@ -2,10 +2,10 @@ import type { IBook } from "@/types";
 import bookPlaceholder from "../assets/book-placeholder.png";
 import { Button } from "./ui/button";
 import { BorrowModal } from "./BorrowModal";
-import { EditBookModal } from "./EditModal";
 import { useDeleteBookMutation } from "@/redux/api/baseApi";
 import Swal from "sweetalert2";
 import { toastify } from "@/utils/alerts";
+import { EditBookModal } from "./EditModal";
 
 interface IProps {
   book: IBook;
@@ -66,7 +66,8 @@ const BookCard = ({ book }: IProps) => {
       {/* Actions */}
       <div className="mt-4 flex justify-between text-sm space-x-6 ">
         <BorrowModal book={book}></BorrowModal>
-        <EditBookModal book={book}></EditBookModal>
+        {}
+        <EditBookModal id={book._id}></EditBookModal>
         <Button
           onClick={() => deleteHandler(book._id)}
           variant={"outline"}
