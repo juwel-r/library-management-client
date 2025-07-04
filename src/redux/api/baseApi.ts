@@ -4,8 +4,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
-  // https://library-management-server-delta.vercel.app/api
+  baseQuery: fetchBaseQuery({ baseUrl: "https://library-management-server-delta.vercel.app/api" }),
   tagTypes: ["books", "editBook"],
   endpoints: (builder) => ({
     getBooks: builder.query<IBooksResponse, GetBooksQueryArg>({
