@@ -24,18 +24,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { Checkbox } from "./ui/checkbox";
 
 interface EditProps {
   id: string;
 }
 
 export function EditBookModal({ id }: EditProps) {
-  const { data, refetch } = useGetBookByIdQuery(id);
+  const { data } = useGetBookByIdQuery(id);
   const [open, setOpen] = useState(false);
   const [editBook] = useEditBookMutation();
   const form = useForm<IBook>();
-
-  console.log(data);
 
   useEffect(() => {
     if (open && data?.data) {
@@ -46,6 +45,7 @@ export function EditBookModal({ id }: EditProps) {
         isbn: data.data.isbn,
         copies: data.data.copies,
         description: data.data.description,
+        available: data.data.available,
       });
     }
   }, [open, data, form]);
@@ -54,13 +54,12 @@ export function EditBookModal({ id }: EditProps) {
     const bookData = {
       ...data,
       copies: Number(data.copies),
-      available: data.copies > 0,
+      available: data.copies === 0 ? false : data.available,
     };
 
     const response = await editBook({ id, bookData });
     if (response?.data?.success) {
       toastify("success", "Save Changes Successful!");
-      refetch();
     } else {
       Swal.fire({
         title: "Something went wrong!",
@@ -73,6 +72,18 @@ export function EditBookModal({ id }: EditProps) {
     form.reset();
     setOpen(false);
   };
+
+  useEffect(() => {
+    const subscription = form.watch((value, { name }) => {
+      if (name === "copies") {
+        const copies = Number(value.copies);
+        if (copies === 0 && value.available) {
+          form.setValue("available", false);
+        }
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -204,30 +215,53 @@ export function EditBookModal({ id }: EditProps) {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="copies"
-              rules={{
-                required: "Copies is required",
-                min: {
-                  value: 0,
-                  message: "Copies must be 0 or positive number.",
-                },
-              }}
-              render={({ field, fieldState }) => (
-                <FormItem>
-                  <FormLabel>Copies</FormLabel>
-                  <FormControl>
-                    <Input type="number" {...field} />
-                  </FormControl>
-                  {fieldState.error && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {fieldState.error.message}
-                    </p>
-                  )}
-                </FormItem>
-              )}
-            />
+            {/* copies and available */}
+            <div className=" flex">
+              <FormField
+                control={form.control}
+                name="copies"
+                rules={{
+                  required: "Copies is required",
+                  min: {
+                    value: 0,
+                    message: "Copies must be 0 or positive number.",
+                  },
+                }}
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormLabel>Copies</FormLabel>
+                    <FormControl>
+                      <Input type="number" {...field} />
+                    </FormControl>
+                    {fieldState.error && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {fieldState.error.message}
+                      </p>
+                    )}
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="available"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="ml-auto flex">Available</FormLabel>
+                    <FormControl>
+                      <Checkbox
+                        className="h-9 w-9 rounded-md ml-auto mr-3 border-gray-400"
+                        checked={field.value}
+                        disabled={Number(form.watch("copies")) < 1}
+                        onCheckedChange={(checked) => {
+                          field.onChange(checked);
+                        }}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
           </Form>
 
           <DialogFooter className="pt-4">

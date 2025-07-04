@@ -1,174 +1,255 @@
-# Minimal Library Management System 📚
+Thanks! Here's your **updated `README.md`** for the **frontend** of the **Minimal Library Management System**, now including:
 
-## **Project Overview**
-
-Develop a **minimal library management system** using React, Redux Toolkit Query (RTK Query), and TypeScript. The system will allow users to view a list of books, perform CRUD operations, borrow books, and view a simple borrow summary—all without authentication, category filters, or payment integration.
-
-The main goal is to build a functional and clean client-side application that interacts with a RESTful API, demonstrating proper state management, UI design, and core functionality.
-
----
-
-## **Features**
-
-### **1. Public Routes 🚀**
-
-All pages of this project are accessible without login or authentication. The focus is on essential book and borrowing features only.
+* ✅ Live links to deployed frontend & backend
+* ✅ Info on backend API structure & validation
+* ✅ Updated with your `IBook` data model
+* ✅ Emphasis on MVC backend structure (light touch since this README is frontend-only)
 
 ---
 
-### **2. Book Management 🛠️**
+````markdown
+# 📚 Minimal Library Management System – Frontend
 
-- **Book List Table:**
-    - Show all books in a table format.
-    - Columns: Title, Author, Genre, ISBN, Copies, Availability, and Actions.
-- **Action Buttons/Icons:**
-    - **Edit Book**: Opens a form with existing book data to edit book info. On submit, updates via API and reflects instantly in UI.
-        - Business logic:
-            - Quantity cannot exceed available copies.
-            - If quantity reaches 0, the book is marked unavailable.
-    - **Delete Book**: Opens a confirmation dialog before removal.
-    - **Borrow Book**: Opens a simple form to borrow a book.
-- **Add New Book:**
-    - Button to open a form for creating a new book.
-    - Fields: Title, Author, Genre, ISBN, Description, Copies, Available (optional, defaults to true).
-    - After creation, redirect to book list and update UI immediately.
+A clean and functional **Library Management System** frontend built with **React**, **Redux Toolkit Query**, and **TypeScript**. This client app communicates with a RESTful API to allow users to view, add, edit, delete, and borrow books — all with proper state management and responsive UI.
+
+> 🔗 **Live Demo**: [https://r-library-56.netlify.app](https://r-library-56.netlify.app)  
+> 🔗 **Backend API** (MVC): [https://library-management-server-delta.vercel.app](https://library-management-server-delta.vercel.app)
 
 ---
 
-### **3. Borrow Book**
+## 📖 Table of Contents
 
-- Open from “Borrow” button in the book list.
-- Fields: Quantity (number), Due Date (date).
-- Business logic:
-    - Quantity cannot exceed available copies.
-    - If quantity reaches 0, the book is marked unavailable.
-- Submit via API and show success message.
-- Redirect to borrow summary page.
-
----
-
-### **4. Borrow Summary**
-
-- Displays a list of books that have been borrowed, along with the **total quantity borrowed** for each book.
-- Retrieved from aggregation API.
-- Columns: Book Title, ISBN, Total Quantity Borrowed.
-
----
-
-### **Landing Page Components**
-
-- **Navbar**: Simple navigation bar with links to:
-    - All Books
-    - Add Book
-    - Borrow Summary
-- **Book Table/List/Grid**: Display list of books with all core actions.
-- **Footer**: Standard footer with site info or credits.
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Page List](#page-list)
+- [UI/UX](#uiux)
+- [Bonus Features](#bonus-features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Tech Stack](#tech-stack)
+- [Folder Structure](#folder-structure)
+- [API & Data Model](#api--data-model)
+- [Configuration](#configuration)
+- [Examples](#examples)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
 
 ---
 
-## **Page List**
+## 🧩 Project Overview
 
-> *(You may choose your preferred UI pattern—pages or modals—for these functionalities.)*
-> 
-- **/books** – Displays a list of all books with options to view, edit, delete, and borrow.
-- **/create-book** – Form interface to add a new book to the system.
-- **/books/:id** – Detailed view of a single book’s information.
-- **/edit-book/:id** – Interface to update an existing book’s details.
-- **/borrow/:bookId** – Form to borrow a selected book.
-- **/borrow-summary** – Displays an aggregated summary of all borrowed books.
+This frontend app enables users to manage books and borrowing activities with **no authentication** required. The UI is minimal yet responsive, and integrates with a **modular MVC backend API** for real-time operations.
 
 ---
 
-## **UI/UX**
+## ✨ Features
 
-- **Minimalist UI**: clean and featureful UI using Tailwind CSS or plain CSS.
-- **User Experience**: Easy navigation between pages, clearly labeled buttons, and simple forms.
-- **Responsive**: The layout must be fully responsive and adapt seamlessly to mobile, tablet, and desktop devices.
+### ✅ Public Access
 
----
+- No login or account creation needed.
+- All functionalities (view, borrow, add, edit, delete) available openly.
 
-## **Bonus Features**
+### 📚 Book Management
 
-These are optional and will earn extra points:
+- List all books with table view.
+- Book actions:
+  - 📝 **Edit Book**
+  - ❌ **Delete Book** (with confirmation)
+  - 📆 **Borrow Book**
+- Add new books with validations:
+  - `copies` required
+  - `available` cannot be set to `true` if `copies` is `0`
 
-| **Feature** | **Bonus** |
-| --- | --- |
-| Optimistic UI Updates | +2 |
-| Toast Notifications | +2 |
-| Responsive Layout | +4 |
-| Type-Safe Forms | +2 |
+### 🔄 Borrowing System
 
----
+- Borrow form includes:
+  - Quantity (validated)
+  - Due Date
+- Borrowed books update the availability of the book automatically.
+- Borrowed book data is submitted via the API and aggregated in summary.
 
-## **🌐 References for Idea Generation**
+### 📊 Borrow Summary
 
-You may refer to these minimal systems for visual or architectural ideas:
-
-- https://booklovers.ancorathemes.com/
-- https://preview.themeforest.net/item/printpress-book-publishing-wordpress-theme/full_screen_preview/24014694?_ga=2.20131384.1669901765.1750772448-288147160.1750772448&_gac=1.116000500.1750772448.CjwKCAjwmenCBhA4EiwAtVjzmusDrHd09NjQ8OrLFRbSuhVJmTj9RvLZZfk3JNwDPDqwvcCPoMQ0ohoCVXcQAvD_BwE
-
-> ⚠️ Please do not copy from these sources. Use them only for inspiration and UI layout ideas.
-> 
-
----
-
-## **Backend Requirements (Moduler/MVC Pattern):**
-
-- **Database:** Use MongoDB with a schema including:
-    - **Books** (with attributes like title, author, **genre, isbn, description, copies, available**)
-    - **Borrows** (linked to book, quantity, dueDate etc)
-- **Book Management:**
-    - Implement CRUD operations for book (create, read, update, delete).
-- **Borrow Management:**
-    - Execute CRUD operations for borrow (borrow, summery), ensuring copies levels before borrow are placed.
-- **Error Handling:**
-    - Establish consistent, user-friendly error messa.
-- **Additional Changes:**
-    - Ensure backend APIs support pagination for book listings and order retrieval.
-    - Add authentication middleware to protect private routes (if needed).
-
-`You may use an existing backend that you have developed previously or create a new version by modifying the older one. Make any additional updates if necessary.`
+- Aggregated list of all borrowed books.
+- Displays total quantity borrowed for each book.
 
 ---
 
-## **Technical Requirements (Frontend + API Integration)**
+## 🗂️ Page List
 
-**1. API Integration**
-
-- Consume backend endpoints via **RTK Query** in the frontend.
-- All API calls should be typed and organized using Redux Toolkit Query best practices.
-
-**2. State Management**
-
-- **Redux Toolkit with RTK Query**:
-    - Used for managing all book and borrow-related API calls and states.
-- **Slices (Optional)**: Use extra slices for UI states if necessary (e.g., modals).
-
-**3. Technology Stack**
-
-| **Layer** | **Technology** |
-| --- | --- |
-| Frontend | React + TypeScript |
-| State Management | Redux Toolkit + RTK Query |
-| Backend | Node.js + Express.js |
-| Database | MongoDB + Mongoose |
-| Styling | Tailwind CSS or any basic CSS framework |
+| Route | Description |
+| ----- | ----------- |
+| `/books` | All books with CRUD + Borrow actions |
+| `/create-book` | Add a new book |
+| `/books/:id` | View single book details |
+| `/edit-book/:id` | Update a book |
+| `/borrow/:bookId` | Borrow a book |
+| `/borrow-summary` | Borrow aggregation summary |
 
 ---
 
-## **Submission:**
+## 🎨 UI/UX
 
-1. **GitHub Repository Link (backend and frontend) with Professional README file** 
-2. **Live Deployment Link (backend and frontend)**
+- Responsive with **Tailwind CSS**
+- Clean, minimalist layout
+- Mobile and tablet-friendly
+- Toast notifications via **React Toastify**
+- Modal & dialog components from **Radix UI**
 
 ---
 
-## **Deadline:**
+## 🎁 Bonus Features
 
-- **60 Marks:** July 04, 2025 - 11:59 PM
-- **50 Marks:** July 05, 2025 - 11:59 PM
-- **30 Marks:** After July 05, 2025
+| Feature | Status |
+| ------- | ------ |
+| Optimistic UI Updates | ✅ |
+| Toast Notifications | ✅ |
+| Responsive Layout | ✅ |
+| Type-Safe Forms | ✅ (Zod + React Hook Form) |
 
-## 🚫 **Important Note:**
+---
 
-Plagiarism will not be tolerated. Ensure that the code you submit is your work. Any instances of plagiarism will result in 0 Marks.
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/your-username/library-management-client.git
+cd library-management-client
+
+# Install dependencies
+npm install
+````
+
+---
+
+## 🚀 Usage
+
+```bash
+# Start the dev server
+npm run dev
+```
+
+Visit: `http://localhost:5173`
+
+---
+
+## 🧪 Tech Stack
+
+| Layer         | Technology                  |
+| ------------- | --------------------------- |
+| Frontend      | React 19 + TypeScript       |
+| State Mgmt    | Redux Toolkit + RTK Query   |
+| Forms         | React Hook Form + Zod       |
+| Styling       | Tailwind CSS                |
+| UI Components | Radix UI, Lucide Icons      |
+| Charts        | Recharts                    |
+| Notifications | React Toastify, SweetAlert2 |
+
+---
+
+## 🗂️ Folder Structure
+
+```
+📁 src/
+├── assets/              # Static files
+├── components/          # Reusable UI components
+├── features/            # RTK Query endpoints & slices
+├── layouts/             # Layout wrappers
+├── pages/               # Page views (Books, Create, Edit, Borrow)
+├── routes/              # Route definitions
+├── types/               # TypeScript interfaces
+├── utils/               # Utility functions/constants
+├── App.tsx              # App root
+└── main.tsx             # Entry point
+```
+
+---
+
+## 🔌 API & Data Model
+
+### API Base URL
+
+Set in `.env`:
+
+```env
+VITE_API_BASE_URL=https://library-management-server-delta.vercel.app/api/v1
+```
+
+### 📦 Book Data Structure
+
+```ts
+export interface IBook {
+  _id: string;
+  title: string;
+  author: string;
+  genre: Genre;
+  isbn: string;
+  description: string;
+  copies: number;
+  available: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IBooksResponse {
+  success: boolean;
+  totalBooks: number;
+  message: string;
+  data: IBook[];
+}
+```
+
+> Backend API is structured in MVC pattern and includes validation.
+> ✅ Copies cannot be zero if availability is true (server-side check).
+> ✅ Proper response types and pagination supported.
+
+---
+
+## ⚙️ Configuration
+
+1. Create a `.env` file at root:
+
+```env
+VITE_API_BASE_URL=https://library-management-server-delta.vercel.app/api/v1
+```
+
+2. Restart server after any `.env` change.
+
+---
+
+## 💡 Examples
+
+* **Add Book**:
+
+  * Fill all fields, ensure `copies > 0`
+* **Edit Book**:
+
+  * Navigate to edit route, change details
+* **Borrow Book**:
+
+  * Borrowing more than available throws an error
+* **Borrow Summary**:
+
+  * Aggregated from backend using RTK Query
+
+---
+
+## 🐞 Troubleshooting
+
+| Issue               | Solution                                         |
+| ------------------- | ------------------------------------------------ |
+| 404 on routes       | Check routing setup in `routes/index.tsx`        |
+| Borrow fails        | Ensure copies > 0 and backend is reachable       |
+| Styling issues      | Ensure Tailwind and Vite are properly configured |
+| Data not refreshing | Check RTK Query cache or invalidation tags       |
+
+---
+
+## 📄 License
+
+This project is for academic and demonstration purposes only.
+
+---
+
+> Developed with ❤️ using React, Redux Toolkit, and TypeScript.
+
+```

@@ -59,7 +59,13 @@ export function BorrowModal({ book }: IProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"outline"} disabled={!book.available} className="hover:bg-[#6255E3] hover:text-white disabled:bg-gray-200">Borrow</Button>
+        <Button
+          variant={"outline"}
+          disabled={!book.available}
+          className="hover:bg-[#6255E3] hover:text-white disabled:bg-gray-200"
+        >
+          Borrow
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -82,7 +88,7 @@ export function BorrowModal({ book }: IProps) {
                 },
                 max: {
                   value: book.copies,
-                  message: `Maximum limit is ${book.copies} copies`,
+                  message: `Only ${book.copies} copy(s) are available now.`,
                 },
               }}
               render={({ field, fieldState }) => (
@@ -117,11 +123,9 @@ export function BorrowModal({ book }: IProps) {
                             !field.value && "text-muted-foreground"
                           )}
                         >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
+                          {field.value
+                            ? format(field.value, "PPP")
+                            : format(new Date(), "PPP")}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </FormControl>
@@ -146,7 +150,7 @@ export function BorrowModal({ book }: IProps) {
 
           <DialogFooter>
             <Button className="mt-4" type="submit">
-              Save changes
+              Borrow Book
             </Button>
           </DialogFooter>
         </form>

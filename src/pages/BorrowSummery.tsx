@@ -35,7 +35,7 @@ export default function BorrowSummary() {
       </h2>
       <div className="flex lg:flex-row flex-col-reverse max-w-full gap-4">
         <div className="overflow-x-auto flex-1/2">
-          <table className="w-full table-auto border ">
+          <table className="w-full table-auto border text-sm sm:text-base">
             <thead className="">
               <tr>
                 <th className="px-4 py-2 text-left border-r">SL</th>

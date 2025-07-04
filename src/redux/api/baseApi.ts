@@ -5,9 +5,9 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
-  tagTypes: ["books"],
+  // https://library-management-server-delta.vercel.app/api
+  tagTypes: ["books", "editBook"],
   endpoints: (builder) => ({
-    
     getBooks: builder.query<IBooksResponse, GetBooksQueryArg>({
       query: ({ limit = 10, currentPage = 0 } = {}) => ({
         url: `/books?limit=${limit}&currentPage=${currentPage}`,
@@ -17,6 +17,7 @@ export const baseApi = createApi({
 
     getBookById: builder.query({
       query: (id) => `/books/${id}`,
+      providesTags:["editBook"],
     }),
 
     editBook: builder.mutation({
@@ -25,7 +26,7 @@ export const baseApi = createApi({
         method: "PUT",
         body: bookData,
       }),
-      invalidatesTags: ["books"],
+      invalidatesTags: ["books", "editBook"],
     }),
 
     borrowBook: builder.mutation({
@@ -34,7 +35,7 @@ export const baseApi = createApi({
         method: "POST",
         body: borrowData,
       }),
-      invalidatesTags: ["books"],
+      invalidatesTags: ["books","editBook"],
     }),
 
     deleteBook: builder.mutation({

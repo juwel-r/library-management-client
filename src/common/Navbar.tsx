@@ -37,7 +37,7 @@ const Navbar = () => {
             <Menu onClick={() => setMenuOpen(!menuOpen)} />
           )}
         </div>
-<hr />
+        <hr />
         {/* Logo */}
         <div className="mx-auto sm:mx-0 sm:mr-10 flex items-center gap-4">
           <Link to="/" className="flex items-center sm:gap-x-4">
@@ -64,8 +64,8 @@ const Navbar = () => {
           }, 100);
         }}
         className={cn(
-          "sm:hidden absolute grid backdrop-blur p-2 rounded-b-md border border-[#6255E3] bg-white/20",
-          menuOpen ? " top-15 left-1" : "top-15 -left-50"
+          "sm:hidden absolute grid backdrop-blur p-2 rounded-sm border-2 bg-white/20 transition-all duration-200",
+          menuOpen ? " top-13 left-4" : "top-20 -left-55"
         )}
       >
         {navMenu}

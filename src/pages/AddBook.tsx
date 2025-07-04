@@ -22,24 +22,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export function AddBook() {
   const [createBook] = useCreateBookMutation();
-  const form = useForm<IBook>({defaultValues:{
-    title:'',
-    author:'',
-    isbn:'',
-    genre: "",
-    copies:1,
-    description:''
-  }});
+  const form = useForm<IBook>({
+    defaultValues: {
+      title: "",
+      author: "",
+      isbn: "",
+      genre: "",
+      copies: 0,
+      description: "",
+      available: false,
+    },
+  });
 
   const handleSubmit: SubmitHandler<IBook> = async (data) => {
     const bookData = {
       ...data,
       copies: Number(data.copies),
-      available: data.copies > 0,
     };
+    console.log(bookData);
     const response = await createBook(bookData);
     if (response?.data?.success) {
       toastify("success", "New book added!");
@@ -55,6 +59,7 @@ export function AddBook() {
 
     form.reset();
   };
+
 
   return (
     <div className="grid md:grid-cols-2 gap-x-12 w-full px-5 pt-8">
@@ -139,14 +144,11 @@ export function AddBook() {
               name="genre"
               rules={{ required: "Genre is required!" }}
               render={({ field, fieldState }) => (
-                <FormItem className="">
+                <FormItem className="w-full">
                   <FormLabel>Genre</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select Priority" />
                       </SelectTrigger>
                     </FormControl>
@@ -167,30 +169,52 @@ export function AddBook() {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="copies"
-              rules={{
-                required: "Copies is required",
-                min: {
-                  value: 1,
-                  message: "Copies must be positive number.",
-                },
-              }}
-              render={({ field, fieldState }) => (
-                <FormItem>
-                  <FormLabel>Copies</FormLabel>
-                  <FormControl>
-                    <Input type="number" {...field} />
-                  </FormControl>
-                  {fieldState.error && (
-                    <p className="text-red-500 text-sm">
-                      {fieldState.error.message}
-                    </p>
-                  )}
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-2">
+              {/* copies */}
+              <FormField
+                control={form.control}
+                name="copies"
+                rules={{
+                  required: "Copies is required",
+                  min: {
+                    value: 1,
+                    message: "Copies must be positive number.",
+                  },
+                }}
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormLabel>Copies</FormLabel>
+                    <FormControl>
+                      <Input type="number" {...field} />
+                    </FormControl>
+                    {fieldState.error && (
+                      <p className="text-red-500 text-sm">
+                        {fieldState.error.message}
+                      </p>
+                    )}
+                  </FormItem>
+                )}
+              />
+
+              {/* checkbox */}
+              <FormField
+                control={form.control}
+                name="available"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="ml-auto">Available</FormLabel>
+                    <FormControl>
+                      <Checkbox
+                        className="h-9 w-9 rounded-md ml-auto mr-3"
+                        onCheckedChange={(checked) => {
+                          field.onChange(checked);
+                        }}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
           <FormField
